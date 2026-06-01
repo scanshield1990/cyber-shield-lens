@@ -4,7 +4,7 @@ import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { calculateCVSSScore, CVSSMetrics } from "../lib/cvss";
 import { suggestMitreTechniques } from "../lib/mitre-attack";
-import { Copy, Download } from "lucide-react";
+import { Copy, Download, ExternalLink } from "lucide-react";
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -36,9 +36,7 @@ export default function ResultsPage() {
   };
 
   const copyToClipboard = () => {
-    const text = `CVSS Vector: ${cvssResult.vector}
-Score: ${cvssResult.score}
-Severity: ${cvssResult.severity}`;
+    const text = `CVSS Vector: ${cvssResult.vector}\nScore: ${cvssResult.score}\nSeverity: ${cvssResult.severity}`;
     navigator.clipboard.writeText(text);
   };
 
@@ -122,100 +120,105 @@ Severity: ${cvssResult.severity}`;
           </div>
         </Card>
 
-         {/* MITRE ATT&CK Analysis */}
-         {description && (
-           <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
-             <div className="mb-4">
-               <h2 className="text-2xl font-bold mb-2 text-blue-400">MITRE ATT&CK Analysis</h2>
-               <div className="flex items-center gap-2">
-                 <span className="text-slate-400 text-sm">Confidence:</span>
-                 <Badge
-                   className={
-                     mitreAnalysis.confidence === "High"
-                       ? "bg-green-600"
-                       : mitreAnalysis.confidence === "Medium"
-                         ? "bg-yellow-600"
-                         : "bg-red-600"
-                   }
-                 >
-                   {mitreAnalysis.confidence}
-                 </Badge>
-               </div>
-             </div>
+        {/* MITRE ATT&CK Analysis */}
+        {description && (
+          <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
+            <div className="mb-4">
+              <h2 className="text-2xl font-bold mb-2 text-blue-400">MITRE ATT&CK Analysis</h2>
+              <div className="flex items-center gap-2">
+                <span className="text-slate-400 text-sm">Confidence:</span>
+                <Badge
+                  className={
+                    mitreAnalysis.confidence === "High"
+                      ? "bg-green-600"
+                      : mitreAnalysis.confidence === "Medium"
+                        ? "bg-yellow-600"
+                        : "bg-red-600"
+                  }
+                >
+                  {mitreAnalysis.confidence}
+                </Badge>
+              </div>
+            </div>
 
-             {(mitreAnalysis as any).matchedKeywords && (mitreAnalysis as any).matchedKeywords.length > 0 && (
-               <div className="mb-6 bg-slate-700 p-3 rounded-lg">
-                 <h3 className="font-semibold text-slate-300 mb-2 text-sm">Matched Keywords</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {(mitreAnalysis as any).matchedKeywords.slice(0, 10).map((keyword: string) => (
-                     <span
-                       key={keyword}
-                       className="bg-slate-600 text-slate-200 text-xs px-2 py-1 rounded"
-                     >
-                       {keyword}
-                     </span>
-                   ))}
-                 </div>
-               </div>
-             )}
+            {(mitreAnalysis as any).matchedKeywords && (mitreAnalysis as any).matchedKeywords.length > 0 && (
+              <div className="mb-6 bg-slate-700 p-3 rounded-lg">
+                <h3 className="font-semibold text-slate-300 mb-2 text-sm">Matched Keywords</h3>
+                <div className="flex flex-wrap gap-2">
+                  {(mitreAnalysis as any).matchedKeywords.slice(0, 10).map((keyword: string) => (
+                    <span
+                      key={keyword}
+                      className="bg-slate-600 text-slate-200 text-xs px-2 py-1 rounded"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
-             {mitreAnalysis.tactics.length > 0 && (
-               <div className="mb-6">
-                 <h3 className="font-semibold text-slate-300 mb-3">Identified Tactics</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {mitreAnalysis.tactics.map((tactic) => (
-                     <Badge key={tactic} className="bg-purple-600 hover:bg-purple-700">
-                       {tactic}
-                     </Badge>
-                   ))}
-                 </div>
-               </div>
-             )}
+            {mitreAnalysis.tactics.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-semibold text-slate-300 mb-3">Identified Tactics</h3>
+                <div className="flex flex-wrap gap-2">
+                  {mitreAnalysis.tactics.map((tactic) => (
+                    <Badge key={tactic} className="bg-purple-600 hover:bg-purple-700">
+                      {tactic}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
 
-              {mitreAnalysis.techniques.length > 0 && (
-                <div>
-                  <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques & Procedures</h3>
-                  <div className="space-y-2">
-                    {mitreAnalysis.techniques.slice(0, 8).map((technique) => {
-                      const mitrePage = `https://attack.mitre.org/techniques/${technique.id.replace(/\./g, '/')}`;
-                      return (
-                        <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
+            {mitreAnalysis.techniques.length > 0 && (
+              <div>
+                <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques & Procedures</h3>
+                <div className="space-y-2">
+                  {mitreAnalysis.techniques.slice(0, 8).map((technique) => {
+                    const mitrePage = `https://attack.mitre.org/techniques/${technique.id.replace(/\./g, "/")}`;
+                    return (
+                      <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
+                        <div className="flex justify-between items-start gap-3">
+                          <div className="flex-1">
+                            <Button
+                              asChild
+                              className="bg-blue-600 hover:bg-blue-500 text-white w-full justify-start text-left h-auto py-2 mb-2"
+                            >
                               <a
                                 href={mitrePage}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-semibold text-blue-400 hover:text-blue-300 underline block mb-1"
                               >
-                                {technique.name}
+                                <span>{technique.name}</span>
+                                <ExternalLink className="w-3 h-3 ml-auto" />
                               </a>
-                              <p className="text-xs text-slate-400 mb-1">{technique.id}</p>
-                              {technique.reason && (
-                                <p className="text-xs text-slate-300">{technique.reason}</p>
-                              )}
-                            </div>
-                            <div className="flex flex-col items-end gap-1 ml-4">
-                              <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
-                              {technique.confidence && (
-                                <span className="text-xs text-slate-400">
-                                  {(technique.confidence * 100).toFixed(0)}%
-                                </span>
-                              )}
-                            </div>
+                            </Button>
+                            <p className="text-xs text-slate-400 mb-1">{technique.id}</p>
+                            {technique.reason && (
+                              <p className="text-xs text-slate-300">{technique.reason}</p>
+                            )}
+                          </div>
+                          <div className="flex flex-col items-end gap-1 ml-4">
+                            <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
+                            {technique.confidence && (
+                              <span className="text-xs text-slate-400">
+                                {(technique.confidence * 100).toFixed(0)}%
+                              </span>
+                            )}
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              )}
+              </div>
+            )}
 
-             {mitreAnalysis.techniques.length === 0 && (
-               <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
-             )}
-           </Card>
-         )}
+            {mitreAnalysis.techniques.length === 0 && (
+              <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
+            )}
+          </Card>
+        )}
 
         <div className="flex gap-4 justify-between">
           <Button
