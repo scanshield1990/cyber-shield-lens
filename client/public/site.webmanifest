@@ -1,7 +1,7 @@
 {
-  "name": "CVSS Assist",
-  "short_name": "CVSS",
-  "description": "Simplified CVSS scoring and incident analysis for cybersecurity professionals",
+  "name": "ThreatLens",
+  "short_name": "ThreatLens",
+  "description": "ThreatLens: Simplified CVSS scoring and MITRE ATT&CK analysis for cybersecurity professionals",
   "start_url": "/",
   "scope": "/",
   "icons": [
