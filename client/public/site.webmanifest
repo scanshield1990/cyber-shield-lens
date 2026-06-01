@@ -1,7 +1,7 @@
 {
-  "name": "Mimo app",
-  "short_name": "",
-  "description": "",
+  "name": "CVSS Assist",
+  "short_name": "CVSS",
+  "description": "Simplified CVSS scoring and incident analysis for cybersecurity professionals",
   "start_url": "/",
   "scope": "/",
   "icons": [
@@ -16,8 +16,8 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
   "display": "standalone",
   "orientation": "portrait-primary",
   "categories": ["productivity", "utilities"]
