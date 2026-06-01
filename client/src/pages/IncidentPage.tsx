@@ -43,7 +43,7 @@ export default function IncidentPage() {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Describe the attack, vulnerability, or incident. Include what happened, how it was discovered, affected systems, and any observables (IPs, domains, file hashes, etc.)..."
+            placeholder="Describe the attack, vulnerability, or incident. Include what happened and how it was discovered."
             className="w-full h-48 bg-slate-700 border border-slate-600 rounded-lg p-4 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
           />
           <p className="text-slate-400 text-sm mt-2">
