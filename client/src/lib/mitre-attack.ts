@@ -4,352 +4,293 @@ export interface MitreTechnique {
   id: string;
   name: string;
   tactic: string;
+  confidence?: number;
+  matchedKeywords?: string[];
+  reason?: string;
 }
 
 // Common MITRE ATT&CK techniques with keyword mappings
 const mitreTechniques: MitreTechnique[] = [
-  {
-    id: "T1059",
-    name: "Command and Scripting Interpreter",
-    tactic: "Execution",
-  },
+  { id: "T1059", name: "Command and Scripting Interpreter", tactic: "Execution" },
   { id: "T1197", name: "BITS Jobs", tactic: "Defense Evasion" },
   { id: "T1547", name: "Boot or Logon Autostart Execution", tactic: "Persistence" },
-  {
-    id: "T1110",
-    name: "Brute Force",
-    tactic: "Credential Access",
-  },
-  {
-    id: "T1555",
-    name: "Credentials from Password Stores",
-    tactic: "Credential Access",
-  },
-  {
-    id: "T1589",
-    name: "Gather Victim Identity Information",
-    tactic: "Reconnaissance",
-  },
+  { id: "T1110", name: "Brute Force", tactic: "Credential Access" },
+  { id: "T1555", name: "Credentials from Password Stores", tactic: "Credential Access" },
+  { id: "T1589", name: "Gather Victim Identity Information", tactic: "Reconnaissance" },
   { id: "T1566", name: "Phishing", tactic: "Initial Access" },
-  {
-    id: "T1190",
-    name: "Exploit Public-Facing Application",
-    tactic: "Initial Access",
-  },
+  { id: "T1190", name: "Exploit Public-Facing Application", tactic: "Initial Access" },
   { id: "T1133", name: "External Remote Services", tactic: "Initial Access" },
   { id: "T1200", name: "Hardware Additions", tactic: "Initial Access" },
-  {
-    id: "T1566.002",
-    name: "Phishing: Spearphishing Link",
-    tactic: "Initial Access",
-  },
-  {
-    id: "T1566.001",
-    name: "Phishing: Spearphishing Attachment",
-    tactic: "Initial Access",
-  },
+  { id: "T1566.002", name: "Phishing: Spearphishing Link", tactic: "Initial Access" },
+  { id: "T1566.001", name: "Phishing: Spearphishing Attachment", tactic: "Initial Access" },
   { id: "T1598", name: "Phishing for Information", tactic: "Reconnaissance" },
   { id: "T1040", name: "Network Sniffing", tactic: "Credential Access" },
   { id: "T1003", name: "OS Credential Dumping", tactic: "Credential Access" },
-  {
-    id: "T1528",
-    name: "Steal Application Access Token",
-    tactic: "Credential Access",
-  },
-  {
-    id: "T1111",
-    name: "Multi-Factor Authentication Interception",
-    tactic: "Credential Access",
-  },
-  {
-    id: "T1040",
-    name: "Network Sniffing",
-    tactic: "Credential Access",
-  },
-  {
-    id: "T1556",
-    name: "Modify Authentication Process",
-    tactic: "Defense Evasion",
-  },
+  { id: "T1528", name: "Steal Application Access Token", tactic: "Credential Access" },
+  { id: "T1111", name: "Multi-Factor Authentication Interception", tactic: "Credential Access" },
+  { id: "T1556", name: "Modify Authentication Process", tactic: "Defense Evasion" },
   { id: "T1134", name: "Access Token Manipulation", tactic: "Defense Evasion" },
-  { id: "T1197", name: "BITS Jobs", tactic: "Defense Evasion" },
   { id: "T1140", name: "Deobfuscate/Decode Files or Information", tactic: "Defense Evasion" },
   { id: "T1480", name: "Execution Guardrails", tactic: "Defense Evasion" },
-  {
-    id: "T1578",
-    name: "Modify Cloud Compute Infrastructure",
-    tactic: "Defense Evasion",
-  },
+  { id: "T1578", name: "Modify Cloud Compute Infrastructure", tactic: "Defense Evasion" },
   { id: "T1070", name: "Indicator Removal", tactic: "Defense Evasion" },
   { id: "T1036", name: "Masquerading", tactic: "Defense Evasion" },
-  { id: "T1556", name: "Modify Authentication Process", tactic: "Defense Evasion" },
   { id: "T1207", name: "Rogue Domain Controller", tactic: "Defense Evasion" },
-  {
-    id: "T1218",
-    name: "System Binary Proxy Execution",
-    tactic: "Defense Evasion",
-  },
+  { id: "T1218", name: "System Binary Proxy Execution", tactic: "Defense Evasion" },
   { id: "T1221", name: "Template Injection", tactic: "Defense Evasion" },
-  {
-    id: "T1550",
-    name: "Use Alternate Authentication Material",
-    tactic: "Defense Evasion",
-  },
+  { id: "T1550", name: "Use Alternate Authentication Material", tactic: "Defense Evasion" },
   { id: "T1078", name: "Valid Accounts", tactic: "Defense Evasion" },
   { id: "T1497", name: "Virtualization/Sandbox Evasion", tactic: "Defense Evasion" },
   { id: "T1220", name: "XSL Script Processing", tactic: "Defense Evasion" },
-  {
-    id: "T1087",
-    name: "Account Discovery",
-    tactic: "Discovery",
-  },
+  { id: "T1087", name: "Account Discovery", tactic: "Discovery" },
   { id: "T1010", name: "Application Window Discovery", tactic: "Discovery" },
   { id: "T1217", name: "Browser Bookmark Discovery", tactic: "Discovery" },
-  {
-    id: "T1580",
-    name: "Cloud Infrastructure Discovery",
-    tactic: "Discovery",
-  },
-  { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
-  { id: "T1538", name: "Cloud Service Dashboard", tactic: "Discovery" },
-  { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
   { id: "T1580", name: "Cloud Infrastructure Discovery", tactic: "Discovery" },
-  {
-    id: "T1538",
-    name: "Cloud Service Dashboard",
-    tactic: "Discovery",
-  },
-  { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
-  { id: "T1619", name: "Cloud Storage Object Discovery", tactic: "Discovery" },
-  { id: "T1538", name: "Cloud Service Dashboard", tactic: "Discovery" },
-  { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
-  { id: "T1619", name: "Cloud Storage Object Discovery", tactic: "Discovery" },
-  {
-    id: "T1613",
-    name: "Container and Resource Discovery",
-    tactic: "Discovery",
-  },
-  { id: "T1622", name: "Debugger Evasion", tactic: "Defense Evasion" },
-  { id: "T1538", name: "Cloud Service Dashboard", tactic: "Discovery" },
-  { id: "T1580", name: "Cloud Infrastructure Discovery", tactic: "Discovery" },
-  { id: "T1538", name: "Cloud Service Dashboard", tactic: "Discovery" },
-  { id: "T1087", name: "Account Discovery", tactic: "Discovery" },
-  {
-    id: "T1010",
-    name: "Application Window Discovery",
-    tactic: "Discovery",
-  },
-  { id: "T1217", name: "Browser Bookmark Discovery", tactic: "Discovery" },
   { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
   { id: "T1538", name: "Cloud Service Dashboard", tactic: "Discovery" },
   { id: "T1619", name: "Cloud Storage Object Discovery", tactic: "Discovery" },
   { id: "T1613", name: "Container and Resource Discovery", tactic: "Discovery" },
-  { id: "T1580", name: "Cloud Infrastructure Discovery", tactic: "Discovery" },
-  {
-    id: "T1538",
-    name: "Cloud Service Dashboard",
-    tactic: "Discovery",
-  },
-  { id: "T1526", name: "Cloud Service Discovery", tactic: "Discovery" },
-  { id: "T1619", name: "Cloud Storage Object Discovery", tactic: "Discovery" },
+  { id: "T1622", name: "Debugger Evasion", tactic: "Defense Evasion" },
   { id: "T1057", name: "Process Discovery", tactic: "Discovery" },
   { id: "T1518", name: "Software Discovery", tactic: "Discovery" },
   { id: "T1007", name: "System Information Discovery", tactic: "Discovery" },
   { id: "T1049", name: "System Network Configuration Discovery", tactic: "Discovery" },
-  {
-    id: "T1040",
-    name: "Network Sniffing",
-    tactic: "Discovery",
-  },
-  {
-    id: "T1046",
-    name: "Network Service Discovery",
-    tactic: "Discovery",
-  },
+  { id: "T1046", name: "Network Service Discovery", tactic: "Discovery" },
   { id: "T1135", name: "Network Share Discovery", tactic: "Discovery" },
-  {
-    id: "T1040",
-    name: "Network Sniffing",
-    tactic: "Discovery",
-  },
-  {
-    id: "T1040",
-    name: "Network Sniffing",
-    tactic: "Discovery",
-  },
-  { id: "T1040", name: "Network Sniffing", tactic: "Discovery" },
-  { id: "T1040", name: "Network Sniffing", tactic: "Discovery" },
   { id: "T1552", name: "Unsecured Credentials", tactic: "Credential Access" },
   { id: "T1187", name: "Forced Authentication", tactic: "Credential Access" },
-  { id: "T1040", name: "Network Sniffing", tactic: "Discovery" },
-  {
-    id: "T1040",
-    name: "Network Sniffing",
-    tactic: "Discovery",
-  },
-  {
-    id: "T1566",
-    name: "Phishing",
-    tactic: "Initial Access",
-  },
   { id: "T1195", name: "Supply Chain Compromise", tactic: "Initial Access" },
   { id: "T1199", name: "Trusted Relationship", tactic: "Initial Access" },
   { id: "T1091", name: "Replication Through Removable Media", tactic: "Lateral Movement" },
   { id: "T1570", name: "Lateral Tool Transfer", tactic: "Lateral Movement" },
-  {
-    id: "T1570",
-    name: "Lateral Tool Transfer",
-    tactic: "Lateral Movement",
-  },
-  { id: "T1570", name: "Lateral Tool Transfer", tactic: "Lateral Movement" },
-  {
-    id: "T1021",
-    name: "Remote Services",
-    tactic: "Lateral Movement",
-  },
-  {
-    id: "T1570",
-    name: "Lateral Tool Transfer",
-    tactic: "Lateral Movement",
-  },
-  { id: "T1550", name: "Use Alternate Authentication Material", tactic: "Lateral Movement" },
-  {
-    id: "T1570",
-    name: "Lateral Tool Transfer",
-    tactic: "Lateral Movement",
-  },
-  { id: "T1570", name: "Lateral Tool Transfer", tactic: "Lateral Movement" },
-  { id: "T1570", name: "Lateral Tool Transfer", tactic: "Lateral Movement" },
-  {
-    id: "T1570",
-    name: "Lateral Tool Transfer",
-    tactic: "Lateral Movement",
-  },
-  {
-    id: "T1578",
-    name: "Modify Cloud Compute Infrastructure",
-    tactic: "Impact",
-  },
-  { id: "T1531", name: "Account Access Removal", tactic: "Impact" },
+  { id: "T1021", name: "Remote Services", tactic: "Lateral Movement" },
   { id: "T1531", name: "Account Access Removal", tactic: "Impact" },
   { id: "T1482", name: "Domain Trust Discovery", tactic: "Discovery" },
-  { id: "T1087", name: "Account Discovery", tactic: "Discovery" },
-  {
-    id: "T1087",
-    name: "Account Discovery",
-    tactic: "Discovery",
-  },
-  { id: "T1087", name: "Account Discovery", tactic: "Discovery" },
-  {
-    id: "T1482",
-    name: "Domain Trust Discovery",
-    tactic: "Discovery",
-  },
+  { id: "T1486", name: "Data Encrypted for Impact", tactic: "Impact" },
+  { id: "T1565", name: "Data Destruction", tactic: "Impact" },
+  { id: "T1561", name: "Disk Wipe", tactic: "Impact" },
+  { id: "T1499", name: "Endpoint Denial of Service", tactic: "Impact" },
+  { id: "T1068", name: "Exploitation for Privilege Escalation", tactic: "Privilege Escalation" },
+  { id: "T1548", name: "Abuse Elevation Control Mechanism", tactic: "Privilege Escalation" },
+  { id: "T1574", name: "Hijack Execution Flow", tactic: "Persistence" },
+  { id: "T1505", name: "Server Software Component", tactic: "Persistence" },
+  { id: "T1005", name: "Data from Local System", tactic: "Collection" },
+  { id: "T1020", name: "Automated Exfiltration", tactic: "Exfiltration" },
+  { id: "T1041", name: "Exfiltration Over C2 Channel", tactic: "Exfiltration" },
+  { id: "T1056", name: "Input Capture", tactic: "Collection" },
+  { id: "T1204", name: "User Execution", tactic: "Execution" },
+  { id: "T1071", name: "Application Layer Protocol", tactic: "Command and Control" },
+  { id: "T1001", name: "Data Obfuscation", tactic: "Command and Control" },
+  { id: "T1608", name: "Stage Capabilities", tactic: "Resource Development" },
+  { id: "T1053", name: "Scheduled Task/Job", tactic: "Execution" },
 ];
 
-const keywordToTechniques: Record<string, string[]> = {
-  // Attack vectors
-  phishing: ["T1566", "T1598", "T1566.001", "T1566.002"],
-  email: ["T1566"],
-  link: ["T1566.002"],
-  attachment: ["T1566.001"],
-  malware: ["T1204", "T1566"],
-  ransomware: ["T1486", "T1565", "T1561"],
-  exploit: ["T1190", "T1068"],
-  "privilege escalation": ["T1548", "T1134", "T1547"],
-  "lateral movement": ["T1021", "T1570", "T1550"],
-  "credential theft": ["T1110", "T1555", "T1003", "T1040"],
-  "password attack": ["T1110"],
-  brute: ["T1110"],
-  "sql injection": ["T1190", "T1005"],
-  xss: ["T1190"],
-  "cross-site": ["T1190"],
-  "denial of service": ["T1499", "T1561"],
-  dos: ["T1499"],
-  ddos: ["T1499"],
-  command: ["T1059"],
-  script: ["T1059"],
-  "code execution": ["T1059"],
-  backdoor: ["T1547", "T1574"],
-  persistence: ["T1547"],
-  rootkit: ["T1547", "T1556"],
-  "remote access": ["T1133", "T1021"],
-  "web shell": ["T1190", "T1505"],
-  "network sniff": ["T1040"],
-  packet: ["T1040"],
-  "man in the middle": ["T1040"],
-  mitm: ["T1040"],
-  eavesdrop: ["T1040"],
-  "data exfiltration": ["T1020", "T1041"],
-  "data theft": ["T1020", "T1041"],
-  "data leak": ["T1020", "T1041"],
-  "credential harvesting": ["T1056", "T1187"],
-  keylog: ["T1056"],
-  capture: ["T1056"],
-  "password reset": ["T1556"],
-  "authentication bypass": ["T1556"],
-  mfa: ["T1111", "T1556"],
-  "multi-factor": ["T1111"],
-  "supply chain": ["T1195"],
-  "third party": ["T1195"],
-  vendor: ["T1195"],
-  vulnerability: ["T1190", "T1068"],
-  zero: ["T1190", "T1068"],
-  "zero-day": ["T1190", "T1068"],
-  "rce": ["T1059", "T1190"],
-  "remote code": ["T1059", "T1190"],
-  "file transfer": ["T1570"],
-  staging: ["T1608"],
-  "command and control": ["T1071", "T1001"],
-  c2: ["T1071", "T1001"],
-  beacon: ["T1071"],
-  "data obfuscation": ["T1001", "T1140"],
-  "log deletion": ["T1070"],
-  "log tampering": ["T1070"],
-  "event log": ["T1070"],
-  "trace removal": ["T1070"],
-  masquerading: ["T1036"],
-  "fake": ["T1036"],
-  impersonation: ["T1036"],
-  "account takeover": ["T1078", "T1110"],
-  "valid account": ["T1078"],
-  "legitimate account": ["T1078"],
-  "stolen credentials": ["T1110", "T1187"],
-  "weak password": ["T1110"],
-  "default credential": ["T1110"],
-  "hardcoded password": ["T1552"],
-  "api key": ["T1552", "T1087"],
-  "access token": ["T1528"],
-  "session hijack": ["T1550", "T1111"],
-  "cookie theft": ["T1528"],
-  vpn: ["T1133", "T1021"],
-  rdp: ["T1021"],
-  ssh: ["T1021"],
-  "secure shell": ["T1021"],
-  windows: ["T1021", "T1087"],
-  linux: ["T1021", "T1087"],
-  "active directory": ["T1087", "T1482"],
-  ldap: ["T1087"],
-  dns: ["T1040", "T1071"],
-  "domain controller": ["T1207"],
-  "registry modification": ["T1547"],
-  "startup folder": ["T1547"],
-  "scheduled task": ["T1053"],
-  cron: ["T1053"],
-  docker: ["T1613"],
-  kubernetes: ["T1613"],
-  cloud: ["T1526", "T1580"],
-  aws: ["T1526", "T1580"],
-  azure: ["T1526", "T1580"],
-  gcp: ["T1526", "T1580"],
-  "object storage": ["T1619"],
-  s3: ["T1619"],
-  "storage account": ["T1619"],
-  "bucket": ["T1619"],
-  "access control": ["T1087", "T1087"],
-  iam: ["T1087"],
-  rbac: ["T1087"],
+// Comprehensive keyword to techniques mapping with support for synonyms and abbreviations
+const keywordToTechniques: Record<string, { techniques: string[]; weight: number }> = {
+  // SQL Injection variations
+  "sql injection": { techniques: ["T1190", "T1005", "T1505"], weight: 1.0 },
+  sqli: { techniques: ["T1190", "T1005", "T1505"], weight: 0.9 },
+  "malicious sql": { techniques: ["T1190", "T1005"], weight: 0.8 },
+  "database injection": { techniques: ["T1190", "T1005"], weight: 0.8 },
+  "unsanitized input": { techniques: ["T1190", "T1005"], weight: 0.7 },
+  "sql query": { techniques: ["T1190", "T1005"], weight: 0.7 },
+  "extracted database": { techniques: ["T1005"], weight: 0.6 },
+  "pulled data": { techniques: ["T1005"], weight: 0.6 },
+
+  // Phishing variations
+  phishing: { techniques: ["T1566", "T1598", "T1566.001", "T1566.002"], weight: 1.0 },
+  phish: { techniques: ["T1566", "T1566.001", "T1566.002"], weight: 0.9 },
+  "fake login": { techniques: ["T1566", "T1187"], weight: 0.9 },
+  "credential harvesting": { techniques: ["T1566", "T1056", "T1187"], weight: 0.9 },
+  "malicious email": { techniques: ["T1566"], weight: 0.9 },
+  "spoof": { techniques: ["T1566", "T1036"], weight: 0.8 },
+  "spearphishing": { techniques: ["T1566.001", "T1566.002"], weight: 0.95 },
+  "fake microsoft": { techniques: ["T1566", "T1036"], weight: 0.8 },
+
+  // Ransomware variations
+  ransomware: { techniques: ["T1486", "T1565", "T1561"], weight: 1.0 },
+  "encrypted files": { techniques: ["T1486"], weight: 0.95 },
+  "ransom note": { techniques: ["T1486"], weight: 1.0 },
+  "locked files": { techniques: ["T1486", "T1561"], weight: 0.9 },
+  "inaccessible": { techniques: ["T1486", "T1561"], weight: 0.8 },
+  "bitcoin payment": { techniques: ["T1486"], weight: 0.9 },
+  "encryption attack": { techniques: ["T1486"], weight: 0.9 },
+
+  // Brute Force variations
+  "brute force": { techniques: ["T1110"], weight: 1.0 },
+  "password guessing": { techniques: ["T1110"], weight: 0.95 },
+  "credential stuffing": { techniques: ["T1110"], weight: 0.95 },
+  "failed login": { techniques: ["T1110"], weight: 0.85 },
+  "login attempt": { techniques: ["T1110"], weight: 0.8 },
+  "password spray": { techniques: ["T1110"], weight: 0.9 },
+
+  // XSS variations
+  xss: { techniques: ["T1190", "T1059"], weight: 0.95 },
+  "cross site scripting": { techniques: ["T1190", "T1059"], weight: 1.0 },
+  "javascript injection": { techniques: ["T1190", "T1059"], weight: 0.9 },
+  "script injection": { techniques: ["T1190", "T1059"], weight: 0.9 },
+
+  // Malware variations
+  malware: { techniques: ["T1204", "T1566"], weight: 0.8 },
+  trojan: { techniques: ["T1204", "T1547"], weight: 0.85 },
+  virus: { techniques: ["T1204", "T1547"], weight: 0.85 },
+  "malicious executable": { techniques: ["T1204"], weight: 0.9 },
+  payload: { techniques: ["T1204", "T1071"], weight: 0.8 },
+  "malware detected": { techniques: ["T1204"], weight: 0.9 },
+
+  // Exploitation variations
+  exploit: { techniques: ["T1190", "T1068"], weight: 1.0 },
+  "public facing": { techniques: ["T1190"], weight: 0.9 },
+  "zero day": { techniques: ["T1190", "T1068"], weight: 0.95 },
+  vulnerability: { techniques: ["T1190", "T1068"], weight: 0.8 },
+  cve: { techniques: ["T1190", "T1068"], weight: 0.85 },
+
+  // Privilege Escalation variations
+  "privilege escalation": { techniques: ["T1548", "T1134", "T1547", "T1068"], weight: 1.0 },
+  "privilege escalat": { techniques: ["T1548", "T1134", "T1547"], weight: 0.9 },
+  "privesc": { techniques: ["T1548", "T1134", "T1547"], weight: 0.9 },
+
+  // Lateral Movement variations
+  "lateral movement": { techniques: ["T1021", "T1570", "T1550"], weight: 1.0 },
+  "lateral move": { techniques: ["T1021", "T1570"], weight: 0.9 },
+  "remote service": { techniques: ["T1021", "T1133"], weight: 0.9 },
+  "jump server": { techniques: ["T1021"], weight: 0.9 },
+
+  // Credential Access variations
+  "credential theft": { techniques: ["T1110", "T1555", "T1003", "T1040", "T1187"], weight: 1.0 },
+  "credential access": { techniques: ["T1110", "T1555", "T1003", "T1040"], weight: 0.9 },
+  "password attack": { techniques: ["T1110"], weight: 0.95 },
+  brute: { techniques: ["T1110"], weight: 0.85 },
+
+  // Data variations
+  "data exfiltration": { techniques: ["T1020", "T1041", "T1005"], weight: 1.0 },
+  "data theft": { techniques: ["T1020", "T1041", "T1005"], weight: 1.0 },
+  "data leak": { techniques: ["T1020", "T1041", "T1005"], weight: 1.0 },
+  "data extraction": { techniques: ["T1005"], weight: 0.95 },
+  "data from database": { techniques: ["T1005"], weight: 0.9 },
+
+  // DoS variations
+  "denial of service": { techniques: ["T1499", "T1561"], weight: 1.0 },
+  dos: { techniques: ["T1499"], weight: 0.95 },
+  ddos: { techniques: ["T1499"], weight: 0.95 },
+  "service disruption": { techniques: ["T1499"], weight: 0.85 },
+
+  // RCE variations
+  rce: { techniques: ["T1059", "T1190"], weight: 1.0 },
+  "remote code execution": { techniques: ["T1059", "T1190"], weight: 1.0 },
+  "remote command": { techniques: ["T1059", "T1021"], weight: 0.9 },
+
+  // Command & Control variations
+  c2: { techniques: ["T1071", "T1001"], weight: 0.95 },
+  "command and control": { techniques: ["T1071", "T1001"], weight: 1.0 },
+  beacon: { techniques: ["T1071"], weight: 0.9 },
+  "c&c": { techniques: ["T1071", "T1001"], weight: 0.9 },
+
+  // Authentication variations
+  "authentication bypass": { techniques: ["T1556", "T1078"], weight: 1.0 },
+  mfa: { techniques: ["T1111", "T1556"], weight: 0.85 },
+  "multi-factor": { techniques: ["T1111"], weight: 0.9 },
+  "password reset": { techniques: ["T1556"], weight: 0.8 },
+
+  // Additional technical terms
+  email: { techniques: ["T1566"], weight: 0.7 },
+  link: { techniques: ["T1566.002"], weight: 0.8 },
+  attachment: { techniques: ["T1566.001"], weight: 0.8 },
+  backdoor: { techniques: ["T1547", "T1574"], weight: 0.9 },
+  persistence: { techniques: ["T1547"], weight: 0.8 },
+  rootkit: { techniques: ["T1547", "T1556"], weight: 0.9 },
+  "remote access": { techniques: ["T1133", "T1021"], weight: 0.9 },
+  "web shell": { techniques: ["T1190", "T1505"], weight: 0.95 },
+  "network sniff": { techniques: ["T1040"], weight: 0.9 },
+  "packet capture": { techniques: ["T1040"], weight: 0.9 },
+  "man in the middle": { techniques: ["T1040"], weight: 0.95 },
+  mitm: { techniques: ["T1040"], weight: 0.9 },
+  eavesdrop: { techniques: ["T1040"], weight: 0.85 },
+  keylog: { techniques: ["T1056"], weight: 0.9 },
+  "account takeover": { techniques: ["T1078", "T1110"], weight: 0.95 },
+  "valid account": { techniques: ["T1078"], weight: 0.9 },
+  "stolen credentials": { techniques: ["T1110", "T1187"], weight: 0.95 },
+  "weak password": { techniques: ["T1110"], weight: 0.9 },
+  "default credential": { techniques: ["T1110"], weight: 0.9 },
+  "hardcoded password": { techniques: ["T1552"], weight: 0.95 },
+  "api key": { techniques: ["T1552", "T1087"], weight: 0.9 },
+  "access token": { techniques: ["T1528"], weight: 0.95 },
+  "session hijack": { techniques: ["T1550", "T1111"], weight: 0.95 },
+  "cookie theft": { techniques: ["T1528"], weight: 0.9 },
+  vpn: { techniques: ["T1133", "T1021"], weight: 0.85 },
+  rdp: { techniques: ["T1021"], weight: 0.9 },
+  ssh: { techniques: ["T1021"], weight: 0.9 },
+  "secure shell": { techniques: ["T1021"], weight: 0.9 },
+  windows: { techniques: ["T1021", "T1087"], weight: 0.7 },
+  linux: { techniques: ["T1021", "T1087"], weight: 0.7 },
+  "active directory": { techniques: ["T1087", "T1482"], weight: 0.95 },
+  ldap: { techniques: ["T1087"], weight: 0.85 },
+  dns: { techniques: ["T1040", "T1071"], weight: 0.8 },
+  "domain controller": { techniques: ["T1207"], weight: 0.9 },
+  "registry modification": { techniques: ["T1547"], weight: 0.9 },
+  "startup folder": { techniques: ["T1547"], weight: 0.9 },
+  "scheduled task": { techniques: ["T1053"], weight: 0.9 },
+  cron: { techniques: ["T1053"], weight: 0.9 },
+  docker: { techniques: ["T1613"], weight: 0.85 },
+  kubernetes: { techniques: ["T1613"], weight: 0.85 },
+  cloud: { techniques: ["T1526", "T1580"], weight: 0.7 },
+  aws: { techniques: ["T1526", "T1580"], weight: 0.85 },
+  azure: { techniques: ["T1526", "T1580"], weight: 0.85 },
+  gcp: { techniques: ["T1526", "T1580"], weight: 0.85 },
+  "object storage": { techniques: ["T1619"], weight: 0.9 },
+  s3: { techniques: ["T1619"], weight: 0.95 },
+  "storage account": { techniques: ["T1619"], weight: 0.9 },
+  bucket: { techniques: ["T1619"], weight: 0.85 },
+  iam: { techniques: ["T1087"], weight: 0.85 },
+  rbac: { techniques: ["T1087"], weight: 0.85 },
+  "supply chain": { techniques: ["T1195"], weight: 1.0 },
+  "third party": { techniques: ["T1195"], weight: 0.9 },
+  vendor: { techniques: ["T1195"], weight: 0.85 },
+  lfi: { techniques: ["T1190"], weight: 0.9 },
+  rfi: { techniques: ["T1190"], weight: 0.9 },
+  ssrf: { techniques: ["T1190"], weight: 0.9 },
+  xxe: { techniques: ["T1190"], weight: 0.9 },
+  "xml external entity": { techniques: ["T1190"], weight: 0.95 },
+  "log deletion": { techniques: ["T1070"], weight: 0.95 },
+  "log tampering": { techniques: ["T1070"], weight: 0.95 },
+  "trace removal": { techniques: ["T1070"], weight: 0.9 },
+  masquerading: { techniques: ["T1036"], weight: 0.9 },
+  impersonation: { techniques: ["T1036"], weight: 0.9 },
 };
+
+// Levenshtein distance for fuzzy matching
+function levenshteinDistance(str1: string, str2: string): number {
+  const track = Array(str2.length + 1)
+    .fill(null)
+    .map(() => Array(str1.length + 1).fill(null));
+
+  for (let i = 0; i <= str1.length; i += 1) {
+    track[0][i] = i;
+  }
+  for (let j = 0; j <= str2.length; j += 1) {
+    track[j][0] = j;
+  }
+
+  for (let j = 1; j <= str2.length; j += 1) {
+    for (let i = 1; i <= str1.length; i += 1) {
+      const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+      track[j][i] = Math.min(
+        track[j][i - 1] + 1,
+        track[j - 1][i] + 1,
+        track[j - 1][i - 1] + indicator
+      );
+    }
+  }
+  return track[str2.length][str1.length];
+}
+
+// Fuzzy match with confidence score
+function fuzzyMatch(text: string, target: string, maxDistance: number = 2): number {
+  const distance = levenshteinDistance(text.toLowerCase(), target.toLowerCase());
+  const maxLen = Math.max(text.length, target.length);
+  if (distance > maxDistance) return 0;
+  return 1 - distance / maxLen;
+}
 
 function normalizeText(text: string): string {
   return text.toLowerCase().trim();
@@ -359,38 +300,108 @@ function extractKeywords(text: string): string[] {
   const normalized = normalizeText(text);
   const words = normalized.split(/[\s\W]+/);
   const bigrams = [];
+  const trigrams = [];
 
   for (let i = 0; i < words.length - 1; i++) {
     bigrams.push(`${words[i]} ${words[i + 1]}`);
   }
+  for (let i = 0; i < words.length - 2; i++) {
+    trigrams.push(`${words[i]} ${words[i + 1]} ${words[i + 2]}`);
+  }
 
-  return [...words, ...bigrams].filter((w) => w.length > 0);
+  return [...trigrams, ...bigrams, ...words].filter((w) => w.length > 0);
 }
 
 export function suggestMitreTechniques(
   description: string
-): { techniques: MitreTechnique[]; tactics: string[] } {
+): { techniques: MitreTechnique[]; tactics: string[]; confidence: string; matchedKeywords: string[] } {
   const keywords = extractKeywords(description);
-  const matchedTechniqueIds = new Set<string>();
+  const matchMap = new Map<
+    string,
+    { weight: number; keywords: Set<string> }
+  >();
 
+  // Exact matches
   for (const keyword of keywords) {
-    const techniques = keywordToTechniques[keyword];
-    if (techniques) {
-      techniques.forEach((id) => matchedTechniqueIds.add(id));
+    const match = keywordToTechniques[keyword];
+    if (match) {
+      for (const techniqueId of match.techniques) {
+        if (!matchMap.has(techniqueId)) {
+          matchMap.set(techniqueId, { weight: 0, keywords: new Set() });
+        }
+        const current = matchMap.get(techniqueId)!;
+        current.weight += match.weight;
+        current.keywords.add(keyword);
+      }
     }
   }
 
-  const matched = Array.from(matchedTechniqueIds)
-    .map((id) => mitreTechniques.find((t) => t.id === id))
-    .filter((t) => t !== undefined) as MitreTechnique[];
+  // Fuzzy matching for close matches
+  const allKeywords = Object.keys(keywordToTechniques);
+  for (const keyword of keywords) {
+    if (keyword.length > 3) {
+      for (const targetKeyword of allKeywords) {
+        if (targetKeyword === keyword) continue;
+        const confidence = fuzzyMatch(keyword, targetKeyword, 2);
+        if (confidence > 0.7) {
+          const match = keywordToTechniques[targetKeyword];
+          for (const techniqueId of match.techniques) {
+            if (!matchMap.has(techniqueId)) {
+              matchMap.set(techniqueId, { weight: 0, keywords: new Set() });
+            }
+            const current = matchMap.get(techniqueId)!;
+            current.weight += match.weight * confidence * 0.5; // Lower weight for fuzzy matches
+            current.keywords.add(keyword);
+          }
+        }
+      }
+    }
+  }
+
+  // Convert to sorted array with deduplication
+  const matched = Array.from(matchMap.entries())
+    .map(([id, { weight, keywords }]) => {
+      const technique = mitreTechniques.find((t) => t.id === id);
+      if (!technique) return null;
+      return {
+        ...technique,
+        confidence: weight,
+        matchedKeywords: Array.from(keywords),
+        reason: generateReason(Array.from(keywords), technique),
+      };
+    })
+    .filter((t) => t !== null)
+    .sort((a, b) => (b?.confidence || 0) - (a?.confidence || 0)) as MitreTechnique[];
 
   const tacticsSet = new Set(matched.map((t) => t.tactic));
   const tactics = Array.from(tacticsSet).sort();
 
+  // Determine overall confidence level
+  let confidenceLevel = "Low";
+  if (matched.length > 0) {
+    const avgConfidence =
+      matched.slice(0, 5).reduce((sum, t) => sum + (t.confidence || 0), 0) / 5;
+    if (avgConfidence > 0.8) confidenceLevel = "High";
+    else if (avgConfidence > 0.5) confidenceLevel = "Medium";
+  }
+
+  // Collect all matched keywords
+  const allMatchedKeywords = new Set<string>();
+  matched.forEach((t) => {
+    t.matchedKeywords?.forEach((k) => allMatchedKeywords.add(k));
+  });
+
   return {
     techniques: matched.slice(0, 10),
     tactics,
+    confidence: confidenceLevel,
+    matchedKeywords: Array.from(allMatchedKeywords),
   };
+}
+
+function generateReason(keywords: string[], technique: MitreTechnique): string {
+  const keywordList = keywords.slice(0, 3).join(", ");
+  return `Keywords matched: ${keywordList}.`;
 }
 
 export function getAllTactics(): string[] {

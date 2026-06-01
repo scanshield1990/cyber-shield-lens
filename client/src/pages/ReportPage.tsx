@@ -11,7 +11,7 @@ interface ReportState {
   metrics: CVSSMetrics;
   description: string;
   cvssResult: CVSSScore;
-  mitreAnalysis: { techniques: MitreTechnique[]; tactics: string[] };
+  mitreAnalysis: { techniques: MitreTechnique[]; tactics: string[]; confidence: string; matchedKeywords: string[] };
 }
 
 export default function ReportPage() {
@@ -143,51 +143,91 @@ export default function ReportPage() {
             </div>
           </section>
 
-          {/* MITRE ATT&CK Analysis */}
-          {mitreAnalysis.techniques.length > 0 && (
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
-                MITRE ATT&CK Analysis
-              </h2>
+           {/* MITRE ATT&CK Analysis */}
+           {mitreAnalysis.techniques.length > 0 && (
+             <section className="mb-8">
+               <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+                 MITRE ATT&CK Analysis
+               </h2>
 
-              {mitreAnalysis.tactics.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Identified Tactics</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {mitreAnalysis.tactics.map((tactic) => (
-                      <span
-                        key={tactic}
-                        className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
-                      >
-                        {tactic}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+               <div className="mb-6 bg-gray-50 p-4 rounded-lg">
+                 <div className="flex items-center gap-3 mb-4">
+                   <span className="text-gray-700 font-semibold">Overall Confidence:</span>
+                   <span
+                     className={`px-3 py-1 rounded-full font-medium text-sm ${
+                       mitreAnalysis.confidence === "High"
+                         ? "bg-green-100 text-green-800"
+                         : mitreAnalysis.confidence === "Medium"
+                           ? "bg-yellow-100 text-yellow-800"
+                           : "bg-red-100 text-red-800"
+                     }`}
+                   >
+                     {mitreAnalysis.confidence}
+                   </span>
+                 </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Suggested Techniques & Procedures
-                </h3>
-                <div className="space-y-3">
-                  {mitreAnalysis.techniques.slice(0, 10).map((technique) => (
-                    <div key={technique.id} className="border border-gray-300 rounded-lg p-4">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-semibold text-gray-900">{technique.name}</p>
-                          <p className="text-xs text-gray-500 font-mono">{technique.id}</p>
-                        </div>
-                        <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded">
-                          {technique.tactic}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
+                 {(mitreAnalysis as any).matchedKeywords && (mitreAnalysis as any).matchedKeywords.length > 0 && (
+                   <div>
+                     <p className="text-sm font-semibold text-gray-700 mb-2">Keywords Matched:</p>
+                     <div className="flex flex-wrap gap-2">
+                       {(mitreAnalysis as any).matchedKeywords.slice(0, 15).map((keyword: string) => (
+                         <span key={keyword} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                           {keyword}
+                         </span>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+               </div>
+
+               {mitreAnalysis.tactics.length > 0 && (
+                 <div className="mb-6">
+                   <h3 className="text-lg font-semibold text-gray-900 mb-3">Identified Tactics</h3>
+                   <div className="flex flex-wrap gap-2">
+                     {mitreAnalysis.tactics.map((tactic) => (
+                       <span
+                         key={tactic}
+                         className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
+                       >
+                         {tactic}
+                       </span>
+                     ))}
+                   </div>
+                 </div>
+               )}
+
+               <div>
+                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                   Suggested Techniques & Procedures
+                 </h3>
+                 <div className="space-y-3">
+                   {mitreAnalysis.techniques.slice(0, 10).map((technique) => (
+                     <div key={technique.id} className="border border-gray-300 rounded-lg p-4">
+                       <div className="flex justify-between items-start">
+                         <div className="flex-1">
+                           <p className="font-semibold text-gray-900">{technique.name}</p>
+                           <p className="text-xs text-gray-500 font-mono">{technique.id}</p>
+                           {technique.reason && (
+                             <p className="text-xs text-gray-600 mt-2">{technique.reason}</p>
+                           )}
+                         </div>
+                         <div className="flex flex-col items-end gap-2 ml-4">
+                           <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded">
+                             {technique.tactic}
+                           </span>
+                           {technique.confidence && (
+                             <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                               {(technique.confidence * 100).toFixed(0)}% confidence
+                             </span>
+                           )}
+                         </div>
+                       </div>
+                     </div>
+                   ))}
+                 </div>
+               </div>
+             </section>
+           )}
 
           {/* Recommendations */}
           <section className="mb-8">

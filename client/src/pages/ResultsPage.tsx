@@ -122,48 +122,90 @@ Severity: ${cvssResult.severity}`;
           </div>
         </Card>
 
-        {/* MITRE ATT&CK Analysis */}
-        {description && (
-          <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
-            <h2 className="text-2xl font-bold mb-4 text-blue-400">MITRE ATT&CK Analysis</h2>
+         {/* MITRE ATT&CK Analysis */}
+         {description && (
+           <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
+             <div className="mb-4">
+               <h2 className="text-2xl font-bold mb-2 text-blue-400">MITRE ATT&CK Analysis</h2>
+               <div className="flex items-center gap-2">
+                 <span className="text-slate-400 text-sm">Confidence:</span>
+                 <Badge
+                   className={
+                     mitreAnalysis.confidence === "High"
+                       ? "bg-green-600"
+                       : mitreAnalysis.confidence === "Medium"
+                         ? "bg-yellow-600"
+                         : "bg-red-600"
+                   }
+                 >
+                   {mitreAnalysis.confidence}
+                 </Badge>
+               </div>
+             </div>
 
-            {mitreAnalysis.tactics.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-semibold text-slate-300 mb-3">Likely Tactics</h3>
-                <div className="flex flex-wrap gap-2">
-                  {mitreAnalysis.tactics.map((tactic) => (
-                    <Badge key={tactic} className="bg-purple-600 hover:bg-purple-700">
-                      {tactic}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
+             {(mitreAnalysis as any).matchedKeywords && (mitreAnalysis as any).matchedKeywords.length > 0 && (
+               <div className="mb-6 bg-slate-700 p-3 rounded-lg">
+                 <h3 className="font-semibold text-slate-300 mb-2 text-sm">Matched Keywords</h3>
+                 <div className="flex flex-wrap gap-2">
+                   {(mitreAnalysis as any).matchedKeywords.slice(0, 10).map((keyword: string) => (
+                     <span
+                       key={keyword}
+                       className="bg-slate-600 text-slate-200 text-xs px-2 py-1 rounded"
+                     >
+                       {keyword}
+                     </span>
+                   ))}
+                 </div>
+               </div>
+             )}
 
-            {mitreAnalysis.techniques.length > 0 && (
-              <div>
-                <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques</h3>
-                <div className="space-y-2">
-                  {mitreAnalysis.techniques.slice(0, 8).map((technique) => (
-                    <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-semibold text-white">{technique.name}</p>
-                          <p className="text-xs text-slate-400">{technique.id}</p>
-                        </div>
-                        <Badge className="bg-orange-600">{technique.tactic}</Badge>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+             {mitreAnalysis.tactics.length > 0 && (
+               <div className="mb-6">
+                 <h3 className="font-semibold text-slate-300 mb-3">Identified Tactics</h3>
+                 <div className="flex flex-wrap gap-2">
+                   {mitreAnalysis.tactics.map((tactic) => (
+                     <Badge key={tactic} className="bg-purple-600 hover:bg-purple-700">
+                       {tactic}
+                     </Badge>
+                   ))}
+                 </div>
+               </div>
+             )}
 
-            {mitreAnalysis.techniques.length === 0 && (
-              <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
-            )}
-          </Card>
-        )}
+             {mitreAnalysis.techniques.length > 0 && (
+               <div>
+                 <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques & Procedures</h3>
+                 <div className="space-y-2">
+                   {mitreAnalysis.techniques.slice(0, 8).map((technique) => (
+                     <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
+                       <div className="flex justify-between items-start">
+                         <div className="flex-1">
+                           <p className="font-semibold text-white">{technique.name}</p>
+                           <p className="text-xs text-slate-400">{technique.id}</p>
+                           {technique.reason && (
+                             <p className="text-xs text-slate-300 mt-1">{technique.reason}</p>
+                           )}
+                         </div>
+                         <div className="flex flex-col items-end gap-1">
+                           <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
+                           {technique.confidence && (
+                             <span className="text-xs text-slate-400">
+                               {(technique.confidence * 100).toFixed(0)}%
+                             </span>
+                           )}
+                         </div>
+                       </div>
+                     </div>
+                   ))}
+                 </div>
+               </div>
+             )}
+
+             {mitreAnalysis.techniques.length === 0 && (
+               <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
+             )}
+           </Card>
+         )}
 
         <div className="flex gap-4 justify-between">
           <Button
