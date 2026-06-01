@@ -83,7 +83,7 @@ Severity: ${cvssResult.severity}`;
         {/* Metrics Card */}
         <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
           <h2 className="text-2xl font-bold mb-4 text-blue-400">Assessed Metrics</h2>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-4 text-sm mb-6">
             <div>
               <span className="text-slate-400">Attack Vector:</span>
               <span className="ml-2 font-semibold capitalize">{metrics.attackVector}</span>
@@ -101,6 +101,10 @@ Severity: ${cvssResult.severity}`;
               <span className="ml-2 font-semibold capitalize">{metrics.userInteraction}</span>
             </div>
             <div>
+              <span className="text-slate-400">Scope:</span>
+              <span className="ml-2 font-semibold capitalize">{metrics.scope}</span>
+            </div>
+            <div>
               <span className="text-slate-400">Confidentiality:</span>
               <span className="ml-2 font-semibold capitalize">{metrics.confidentiality}</span>
             </div>
@@ -112,6 +116,9 @@ Severity: ${cvssResult.severity}`;
               <span className="text-slate-400">Availability:</span>
               <span className="ml-2 font-semibold capitalize">{metrics.availability}</span>
             </div>
+          </div>
+          <div className="bg-slate-700 p-4 rounded-lg mt-4">
+            <p className="text-xs text-slate-300 font-mono break-all text-blue-300">{cvssResult.vector}</p>
           </div>
         </Card>
 

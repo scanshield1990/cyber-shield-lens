@@ -126,9 +126,20 @@ export default function ReportPage() {
               <MetricBox label="Attack Complexity" value={metrics.attackComplexity} />
               <MetricBox label="Privileges Required" value={metrics.privilegesRequired} />
               <MetricBox label="User Interaction" value={metrics.userInteraction} />
+              <MetricBox label="Scope" value={metrics.scope} />
               <MetricBox label="Confidentiality" value={metrics.confidentiality} />
               <MetricBox label="Integrity" value={metrics.integrity} />
               <MetricBox label="Availability" value={metrics.availability} />
+            </div>
+          </section>
+
+          {/* Scoring Explanation */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+              Scoring Explanation
+            </h2>
+            <div className="bg-gray-50 p-6 rounded-lg space-y-4 text-sm text-gray-700">
+              <ScoringExplanation metrics={metrics} severity={cvssResult.severity} />
             </div>
           </section>
 
@@ -273,4 +284,103 @@ function getSeverityTextColor(severity: string): string {
     default:
       return "text-green-600";
   }
+}
+
+function ScoringExplanation({ metrics, severity }: { metrics: CVSSMetrics; severity: string }) {
+  const getMetricImpact = (metric: string, value: string): string => {
+    const impacts: Record<string, Record<string, string>> = {
+      attackVector: {
+        network: "Network attack vector is highly exploitable - contributes to higher severity",
+        adjacent: "Adjacent network requirement reduces exploitability compared to Network",
+        local: "Local access required significantly reduces exploitability",
+        physical: "Physical access requirement is the least exploitable vector",
+      },
+      attackComplexity: {
+        low: "Low complexity means the attack is easy to execute - increases severity",
+        high: "High complexity requires special conditions - reduces severity",
+      },
+      privilegesRequired: {
+        none: "No privileges required means anyone can exploit - significantly increases severity",
+        low: "Low privileges required reduces the pool of potential attackers",
+        high: "High privileges required means attacker needs admin/root access first",
+      },
+      userInteraction: {
+        none: "No user interaction required means automatic exploitation - increases severity",
+        required: "User interaction requirement reduces exploitability significantly",
+      },
+      scope: {
+        unchanged: "Unchanged scope means impact is limited to the vulnerable component",
+        changed: "Changed scope means impact extends beyond vulnerable component - increases severity",
+      },
+      confidentiality: {
+        none: "No confidentiality impact",
+        low: "Low confidentiality impact - some sensitive data may be exposed",
+        high: "High confidentiality impact - significant sensitive data exposure",
+      },
+      integrity: {
+        none: "No integrity impact - data cannot be modified",
+        low: "Low integrity impact - limited data modification possible",
+        high: "High integrity impact - significant data modification or destruction possible",
+      },
+      availability: {
+        none: "No availability impact - services remain uninterrupted",
+        low: "Low availability impact - minor service degradation",
+        high: "High availability impact - complete service outage possible",
+      },
+    };
+
+    return impacts[metric]?.[value] || "";
+  };
+
+  return (
+    <div className="space-y-3">
+      <p className="font-semibold text-gray-900">Why This Vulnerability Received a {severity} Rating:</p>
+
+      <div className="space-y-2">
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Attack Vector: {metrics.attackVector.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("attackVector", metrics.attackVector)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Attack Complexity: {metrics.attackComplexity.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("attackComplexity", metrics.attackComplexity)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Privileges Required: {metrics.privilegesRequired.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("privilegesRequired", metrics.privilegesRequired)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">User Interaction: {metrics.userInteraction.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("userInteraction", metrics.userInteraction)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Scope: {metrics.scope.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("scope", metrics.scope)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Confidentiality Impact: {metrics.confidentiality.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("confidentiality", metrics.confidentiality)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Integrity Impact: {metrics.integrity.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("integrity", metrics.integrity)}</p>
+        </div>
+
+        <div>
+          <p className="font-semibold text-gray-800 text-xs">Availability Impact: {metrics.availability.toUpperCase()}</p>
+          <p className="text-gray-700 text-xs ml-2">{getMetricImpact("availability", metrics.availability)}</p>
+        </div>
+      </div>
+
+      <p className="italic text-gray-600 text-xs mt-4 pt-2 border-t border-gray-300">
+        These metrics combine to create the final CVSS score. More exploitable vectors and higher impact combine for higher severity.
+      </p>
+    </div>
+  );
 }
