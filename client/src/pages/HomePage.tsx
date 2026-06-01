@@ -64,8 +64,19 @@ export default function HomePage() {
                Start Assessment
              </Button>
            </div>
+
+          <div className="mt-16 pt-8 border-t border-slate-600 text-center text-slate-400">
+            <p className="font-semibold mb-2">Contact:</p>
+            <p>Nicholas Meade</p>
+            <p>
+              <a href="mailto:nickmeade1990@gmail.com" className="text-blue-400 hover:text-blue-300">
+                nickmeade1990@gmail.com
+              </a>
+            </p>
+            <p>8189664360</p>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+       </div>
+     </div>
+   );
 }
