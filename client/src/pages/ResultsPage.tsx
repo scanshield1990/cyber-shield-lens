@@ -221,13 +221,24 @@ export default function ResultsPage() {
         )}
 
         <div className="flex gap-4 justify-between flex-wrap">
-          <Button
-            onClick={() => navigate("/")}
-            variant="outline"
-            className="border-slate-600 text-slate-300"
-          >
-            Start New Assessment
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate("/")}
+              variant="outline"
+              className="border-slate-600 text-slate-300"
+            >
+              Start New Assessment
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="border-slate-600 text-slate-300"
+            >
+              <a href="https://gofund.me/5bb3901ea" target="_blank" rel="noopener noreferrer">
+                Donate
+              </a>
+            </Button>
+          </div>
           <div className="flex gap-4">
             <Button
               onClick={() => navigate("/incident", { state: { metrics } })}
