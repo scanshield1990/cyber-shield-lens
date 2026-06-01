@@ -49,21 +49,14 @@ export default function HomePage() {
             </ol>
           </Card>
 
-          <div className="grid grid-cols-2 gap-4 mt-8">
-            <Button
-              onClick={() => navigate("/questions")}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold"
-            >
-              Start Assessment
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => navigate("/import")}
-              className="border-blue-400 text-blue-400 hover:bg-slate-700 py-6 text-lg font-semibold"
-            >
-              Import Data
-            </Button>
-          </div>
+           <div className="mt-8">
+             <Button
+               onClick={() => navigate("/questions")}
+               className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold w-full"
+             >
+               Start Assessment
+             </Button>
+           </div>
         </div>
       </div>
     </div>
