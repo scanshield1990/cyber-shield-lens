@@ -12,15 +12,15 @@ import FeedbackButton from "./components/FeedbackButton";
 export default function ResultsPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const metrics = location.state?.metrics as CVSSMetrics;
+  const metrics = location.state?.metrics as CVSSMetrics | null;
   const description = location.state?.description as string;
 
-  if (!metrics) {
+  if (metrics === undefined) {
     navigate("/questions");
     return null;
   }
 
-  const cvssResult = calculateCVSSScore(metrics);
+  const cvssResult = metrics ? calculateCVSSScore(metrics) : null;
   const mitreAnalysis = suggestMitreTechniques(description);
 
   const getSeverityColor = (severity: string) => {
@@ -44,71 +44,89 @@ export default function ResultsPage() {
         <h1 className="text-4xl font-bold mb-8">Assessment Results</h1>
 
         {/* CVSS Score Card */}
-        <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="text-center">
-              <div className={`text-5xl font-bold mb-2 ${getSeverityColor(cvssResult.severity)}`}>
-                {cvssResult.score}
+        {cvssResult && (
+          <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="text-center">
+                <div className={`text-5xl font-bold mb-2 ${getSeverityColor(cvssResult.severity)}`}>
+                  {cvssResult.score}
+                </div>
+                <div className="text-slate-400">Base Score</div>
               </div>
-              <div className="text-slate-400">Base Score</div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className={`text-4xl font-bold ${getSeverityColor(cvssResult.severity)} px-4 py-2 rounded`}>
-                {cvssResult.severity}
+              <div className="flex items-center justify-center">
+                <div className={`text-4xl font-bold ${getSeverityColor(cvssResult.severity)} px-4 py-2 rounded`}>
+                  {cvssResult.severity}
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-slate-400 break-all">{cvssResult.vector}</p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-xs text-slate-400 break-all">{cvssResult.vector}</p>
-            </div>
-          </div>
 
-          <div className="bg-slate-700 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2 text-blue-300">Severity Explanation</h3>
-            <p className="text-slate-300 text-sm leading-relaxed">{cvssResult.explanation}</p>
-          </div>
-        </Card>
+            <div className="bg-slate-700 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2 text-blue-300">Severity Explanation</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">{cvssResult.explanation}</p>
+            </div>
+          </Card>
+        )}
+
+        {/* No CVSS Score Card */}
+        {!cvssResult && (
+          <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-blue-400 mb-4">CVSS Assessment Skipped</h2>
+              <p className="text-slate-300">
+                You chose to skip the CVSS vulnerability assessment. Proceeding with incident analysis only.
+              </p>
+            </div>
+          </Card>
+        )}
 
         {/* Metrics Card */}
-        <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
-          <h2 className="text-2xl font-bold mb-4 text-blue-400">Assessed Metrics</h2>
-          <div className="grid grid-cols-2 gap-4 text-sm mb-6">
-            <div>
-              <span className="text-slate-400">Attack Vector:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.attackVector}</span>
+        {metrics && (
+          <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
+            <h2 className="text-2xl font-bold mb-4 text-blue-400">Assessed Metrics</h2>
+            <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+              <div>
+                <span className="text-slate-400">Attack Vector:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.attackVector}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Attack Complexity:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.attackComplexity}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Privileges Required:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.privilegesRequired}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">User Interaction:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.userInteraction}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Scope:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.scope}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Confidentiality:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.confidentiality}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Integrity:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.integrity}</span>
+              </div>
+              <div>
+                <span className="text-slate-400">Availability:</span>
+                <span className="ml-2 font-semibold capitalize">{metrics.availability}</span>
+              </div>
             </div>
-            <div>
-              <span className="text-slate-400">Attack Complexity:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.attackComplexity}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Privileges Required:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.privilegesRequired}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">User Interaction:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.userInteraction}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Scope:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.scope}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Confidentiality:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.confidentiality}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Integrity:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.integrity}</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Availability:</span>
-              <span className="ml-2 font-semibold capitalize">{metrics.availability}</span>
-            </div>
-          </div>
-          <div className="bg-slate-700 p-4 rounded-lg mt-4">
-            <p className="text-xs text-slate-300 font-mono break-all text-blue-300">{cvssResult.vector}</p>
-          </div>
-        </Card>
+            {cvssResult && (
+              <div className="bg-slate-700 p-4 rounded-lg mt-4">
+                <p className="text-xs text-slate-300 font-mono break-all text-blue-300">{cvssResult.vector}</p>
+              </div>
+            )}
+          </Card>
+        )}
 
         {/* Executive Summary */}
         {description && mitreAnalysis.tactics.length > 0 && (

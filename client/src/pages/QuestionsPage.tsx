@@ -5,6 +5,7 @@ import { Card } from "../components/ui/card";
 import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "../components/ui/dialog";
 import { CVSSMetrics } from "../lib/cvss";
 import { HelpCircle } from "lucide-react";
 
@@ -200,6 +201,7 @@ export default function QuestionsPage() {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [showSkipDialog, setShowSkipDialog] = useState(false);
 
   const question = questions[currentQuestion];
   const allAnswered = questions.every((q) => answers[q.id]);
@@ -286,7 +288,7 @@ export default function QuestionsPage() {
           </RadioGroup>
         </Card>
 
-        <div className="flex gap-4 justify-between">
+        <div className="flex gap-4 justify-between items-center">
           <Button
             onClick={handlePrev}
             disabled={currentQuestion === 0}
@@ -294,6 +296,14 @@ export default function QuestionsPage() {
             className="border-slate-600 text-slate-300 disabled:opacity-50"
           >
             Previous
+          </Button>
+
+          <Button
+            onClick={() => setShowSkipDialog(true)}
+            variant="outline"
+            className="border-red-600 text-red-400 hover:bg-red-950"
+          >
+            Skip CVSS Score?
           </Button>
 
           {currentQuestion < questions.length - 1 ? (
@@ -314,6 +324,35 @@ export default function QuestionsPage() {
             </Button>
           )}
         </div>
+
+        <Dialog open={showSkipDialog} onOpenChange={setShowSkipDialog}>
+          <DialogContent className="bg-slate-800 border-slate-700">
+            <DialogHeader>
+              <DialogTitle className="text-white">Skip CVSS Score Assessment?</DialogTitle>
+              <DialogDescription className="text-slate-300">
+                Are you sure you want to skip the CVSS assessment? Skipping this will not produce a CVSS score on the result page. Would you like to continue?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button
+                onClick={() => setShowSkipDialog(false)}
+                variant="outline"
+                className="border-slate-600 text-slate-300"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowSkipDialog(false);
+                  navigate("/incident", { state: { metrics: null } });
+                }}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Continue Without CVSS
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

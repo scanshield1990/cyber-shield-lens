@@ -8,9 +8,9 @@ import { CVSSMetrics, CVSSScore } from "../lib/cvss";
 import { MitreTechnique } from "../lib/mitre-attack";
 
 interface ReportState {
-  metrics: CVSSMetrics;
+  metrics: CVSSMetrics | null;
   description: string;
-  cvssResult: CVSSScore;
+  cvssResult: CVSSScore | null;
   mitreAnalysis: { techniques: MitreTechnique[]; tactics: string[]; confidence: string; matchedKeywords: string[] };
 }
 
@@ -77,32 +77,49 @@ export default function ReportPage() {
           </div>
 
           {/* Executive Summary */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
-              Executive Summary
-            </h2>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="grid grid-cols-3 gap-6 mb-6">
-                <div>
-                  <p className="text-gray-600 text-sm">CVSS Base Score</p>
-                  <p className="text-3xl font-bold text-gray-900">{cvssResult.score}</p>
+          {cvssResult && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+                Executive Summary
+              </h2>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                  <div>
+                    <p className="text-gray-600 text-sm">CVSS Base Score</p>
+                    <p className="text-3xl font-bold text-gray-900">{cvssResult.score}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600 text-sm">Severity Rating</p>
+                    <p className={`text-3xl font-bold ${getSeverityTextColor(cvssResult.severity)}`}>
+                      {cvssResult.severity}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600 text-sm">CVSS Vector</p>
+                    <p className="text-sm font-mono text-gray-700 break-all">
+                      {cvssResult.vector}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-600 text-sm">Severity Rating</p>
-                  <p className={`text-3xl font-bold ${getSeverityTextColor(cvssResult.severity)}`}>
-                    {cvssResult.severity}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-600 text-sm">CVSS Vector</p>
-                  <p className="text-sm font-mono text-gray-700 break-all">
-                    {cvssResult.vector}
-                  </p>
-                </div>
+                <p className="text-gray-700 leading-relaxed">{cvssResult.explanation}</p>
               </div>
-              <p className="text-gray-700 leading-relaxed">{cvssResult.explanation}</p>
-            </div>
-          </section>
+            </section>
+          )}
+
+          {/* CVSS Assessment Skipped */}
+          {!cvssResult && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+                Assessment Status
+              </h2>
+              <div className="bg-yellow-50 p-6 rounded-lg text-center border border-yellow-300">
+                <p className="text-gray-700 font-semibold">CVSS Assessment Skipped</p>
+                <p className="text-gray-600 text-sm mt-2">
+                  The CVSS vulnerability assessment was not completed. Only incident analysis is included in this report.
+                </p>
+              </div>
+            </section>
+          )}
 
           {/* Vulnerability Description */}
           {description && (
@@ -117,31 +134,35 @@ export default function ReportPage() {
           )}
 
           {/* CVSS Metrics Details */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
-              CVSS v3.1 Metrics
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <MetricBox label="Attack Vector" value={metrics.attackVector} />
-              <MetricBox label="Attack Complexity" value={metrics.attackComplexity} />
-              <MetricBox label="Privileges Required" value={metrics.privilegesRequired} />
-              <MetricBox label="User Interaction" value={metrics.userInteraction} />
-              <MetricBox label="Scope" value={metrics.scope} />
-              <MetricBox label="Confidentiality" value={metrics.confidentiality} />
-              <MetricBox label="Integrity" value={metrics.integrity} />
-              <MetricBox label="Availability" value={metrics.availability} />
-            </div>
-          </section>
+          {metrics && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+                CVSS v3.1 Metrics
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <MetricBox label="Attack Vector" value={metrics.attackVector} />
+                <MetricBox label="Attack Complexity" value={metrics.attackComplexity} />
+                <MetricBox label="Privileges Required" value={metrics.privilegesRequired} />
+                <MetricBox label="User Interaction" value={metrics.userInteraction} />
+                <MetricBox label="Scope" value={metrics.scope} />
+                <MetricBox label="Confidentiality" value={metrics.confidentiality} />
+                <MetricBox label="Integrity" value={metrics.integrity} />
+                <MetricBox label="Availability" value={metrics.availability} />
+              </div>
+            </section>
+          )}
 
           {/* Scoring Explanation */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
-              Scoring Explanation
-            </h2>
-            <div className="bg-gray-50 p-6 rounded-lg space-y-4 text-sm text-gray-700">
-              <ScoringExplanation metrics={metrics} severity={cvssResult.severity} />
-            </div>
-          </section>
+          {cvssResult && metrics && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-200 pb-2">
+                Scoring Explanation
+              </h2>
+              <div className="bg-gray-50 p-6 rounded-lg space-y-4 text-sm text-gray-700">
+                <ScoringExplanation metrics={metrics} severity={cvssResult.severity} />
+              </div>
+            </section>
+          )}
 
            {/* MITRE ATT&CK Analysis */}
            {mitreAnalysis.techniques.length > 0 && (

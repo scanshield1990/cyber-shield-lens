@@ -8,10 +8,10 @@ import { CVSSMetrics } from "../lib/cvss";
 export default function IncidentPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const metrics = location.state?.metrics as CVSSMetrics;
+  const metrics = location.state?.metrics as CVSSMetrics | null;
   const [description, setDescription] = useState("");
 
-  if (!metrics) {
+  if (metrics === undefined) {
     navigate("/questions");
     return null;
   }
