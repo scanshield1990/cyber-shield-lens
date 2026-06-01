@@ -90,6 +90,7 @@ const mitreTechniques: MitreTechnique[] = [
   { id: "T1001", name: "Data Obfuscation", tactic: "Command and Control" },
   { id: "T1608", name: "Stage Capabilities", tactic: "Resource Development" },
   { id: "T1053", name: "Scheduled Task/Job", tactic: "Execution" },
+  { id: "T1213", name: "Data from Information Repositories", tactic: "Collection" },
 ];
 
 // Comprehensive keyword to techniques mapping with support for synonyms and abbreviations
@@ -110,8 +111,8 @@ const keywordToTechniques: Record<string, { techniques: string[]; weight: number
   "fake login": { techniques: ["T1566", "T1187"], weight: 0.9 },
   "credential harvesting": { techniques: ["T1566", "T1056", "T1187"], weight: 0.9 },
   "malicious email": { techniques: ["T1566"], weight: 0.9 },
-  "spoof": { techniques: ["T1566", "T1036"], weight: 0.8 },
-  "spearphishing": { techniques: ["T1566.001", "T1566.002"], weight: 0.95 },
+  spoof: { techniques: ["T1566", "T1036"], weight: 0.8 },
+  spearphishing: { techniques: ["T1566.001", "T1566.002"], weight: 0.95 },
   "fake microsoft": { techniques: ["T1566", "T1036"], weight: 0.8 },
 
   // Ransomware variations
@@ -119,7 +120,7 @@ const keywordToTechniques: Record<string, { techniques: string[]; weight: number
   "encrypted files": { techniques: ["T1486"], weight: 0.95 },
   "ransom note": { techniques: ["T1486"], weight: 1.0 },
   "locked files": { techniques: ["T1486", "T1561"], weight: 0.9 },
-  "inaccessible": { techniques: ["T1486", "T1561"], weight: 0.8 },
+  inaccessible: { techniques: ["T1486", "T1561"], weight: 0.8 },
   "bitcoin payment": { techniques: ["T1486"], weight: 0.9 },
   "encryption attack": { techniques: ["T1486"], weight: 0.9 },
 
@@ -155,7 +156,7 @@ const keywordToTechniques: Record<string, { techniques: string[]; weight: number
   // Privilege Escalation variations
   "privilege escalation": { techniques: ["T1548", "T1134", "T1547", "T1068"], weight: 1.0 },
   "privilege escalat": { techniques: ["T1548", "T1134", "T1547"], weight: 0.9 },
-  "privesc": { techniques: ["T1548", "T1134", "T1547"], weight: 0.9 },
+  privesc: { techniques: ["T1548", "T1134", "T1547"], weight: 0.9 },
 
   // Lateral Movement variations
   "lateral movement": { techniques: ["T1021", "T1570", "T1550"], weight: 1.0 },
@@ -193,11 +194,65 @@ const keywordToTechniques: Record<string, { techniques: string[]; weight: number
   beacon: { techniques: ["T1071"], weight: 0.9 },
   "c&c": { techniques: ["T1071", "T1001"], weight: 0.9 },
 
-  // Authentication variations
+  // Authentication variations (expanded)
   "authentication bypass": { techniques: ["T1556", "T1078"], weight: 1.0 },
+  "bypass authentication": { techniques: ["T1556", "T1078"], weight: 1.0 },
+  "bypassed authentication": { techniques: ["T1556", "T1078"], weight: 0.95 },
+  "authentication protocol bypass": { techniques: ["T1556", "T1078"], weight: 0.95 },
+  "bypassed login controls": { techniques: ["T1556", "T1078"], weight: 0.95 },
+  "unauthorized authentication": { techniques: ["T1556", "T1078"], weight: 0.9 },
+  "circumvented authentication": { techniques: ["T1556", "T1078"], weight: 0.95 },
+  "authentication weakness": { techniques: ["T1556", "T1078"], weight: 0.9 },
+  "login bypass": { techniques: ["T1556", "T1078"], weight: 0.95 },
+  "access control bypass": { techniques: ["T1556", "T1078"], weight: 0.9 },
+  "bypass security controls": { techniques: ["T1556", "T1078"], weight: 0.85 },
   mfa: { techniques: ["T1111", "T1556"], weight: 0.85 },
   "multi-factor": { techniques: ["T1111"], weight: 0.9 },
   "password reset": { techniques: ["T1556"], weight: 0.8 },
+
+  // Privilege Escalation variations (expanded)
+  "elevated privileges": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "elevated to admin": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "gained administrator access": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "gained admin access": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "escalated privileges": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "local privilege escalation": { techniques: ["T1068", "T1078"], weight: 1.0 },
+  "elevated account permissions": { techniques: ["T1068", "T1078"], weight: 0.9 },
+  "unauthorized admin access": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "obtained administrator rights": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "root access gained": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "sudo abuse": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  elevate: { techniques: ["T1068"], weight: 0.6 },
+  escalating: { techniques: ["T1068"], weight: 0.7 },
+
+  // Account Takeover variations
+  "account compromise": { techniques: ["T1078"], weight: 0.95 },
+  "unauthorized account access": { techniques: ["T1078"], weight: 0.95 },
+  "compromised account": { techniques: ["T1078"], weight: 0.95 },
+  "hijacked account": { techniques: ["T1078"], weight: 0.95 },
+  "stolen account": { techniques: ["T1078"], weight: 0.95 },
+
+  // Sensitive Data Access variations
+  "accessed sensitive data": { techniques: ["T1213"], weight: 0.95 },
+  "viewed sensitive information": { techniques: ["T1213"], weight: 0.95 },
+  "confidential data exposure": { techniques: ["T1213"], weight: 0.95 },
+  "unauthorized data access": { techniques: ["T1213"], weight: 0.95 },
+  "exposed records": { techniques: ["T1213"], weight: 0.95 },
+  "customer data access": { techniques: ["T1213"], weight: 0.95 },
+  "sensitive information disclosure": { techniques: ["T1213"], weight: 0.95 },
+  "viewed protected data": { techniques: ["T1213"], weight: 0.9 },
+  "unauthorized record access": { techniques: ["T1213"], weight: 0.95 },
+  "extracted data": { techniques: ["T1213"], weight: 0.9 },
+  "downloaded confidential information": { techniques: ["T1213"], weight: 0.95 },
+
+  // Authorization & Access Control Abuse variations
+  "authorization bypass": { techniques: ["T1078", "T1068"], weight: 0.95 },
+  "role escalation": { techniques: ["T1068", "T1078"], weight: 0.95 },
+  "permission abuse": { techniques: ["T1078", "T1068"], weight: 0.9 },
+  "excessive permissions": { techniques: ["T1078"], weight: 0.9 },
+  "broken access control": { techniques: ["T1078", "T1068"], weight: 0.95 },
+  "unauthorized privileges": { techniques: ["T1078", "T1068"], weight: 0.95 },
+  "privilege abuse": { techniques: ["T1078", "T1068"], weight: 0.95 },
 
   // Additional technical terms
   email: { techniques: ["T1566"], weight: 0.7 },
