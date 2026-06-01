@@ -30,6 +30,9 @@ export default function IncidentPage() {
           <p className="text-slate-400">
             Describe the vulnerability or incident for MITRE ATT&CK analysis
           </p>
+          <p className="text-red-400 font-bold mt-2">
+            DO NOT GIVE ANY SENSITIVE INFORMATION.
+          </p>
         </div>
 
         <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
