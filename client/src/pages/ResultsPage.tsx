@@ -4,7 +4,7 @@ import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { calculateCVSSScore, CVSSMetrics } from "../lib/cvss";
 import { suggestMitreTechniques } from "../lib/mitre-attack";
-import { Copy, Download, ExternalLink } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -35,11 +35,6 @@ export default function ResultsPage() {
     }
   };
 
-  const copyToClipboard = () => {
-    const text = `CVSS Vector: ${cvssResult.vector}\nScore: ${cvssResult.score}\nSeverity: ${cvssResult.severity}`;
-    navigator.clipboard.writeText(text);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4">
       <div className="container mx-auto max-w-3xl py-8">
@@ -60,14 +55,6 @@ export default function ResultsPage() {
               </div>
             </div>
             <div className="text-right">
-              <Button
-                size="sm"
-                onClick={copyToClipboard}
-                className="bg-slate-700 hover:bg-slate-600 mb-2"
-              >
-                <Copy className="w-4 h-4 mr-2" />
-                Copy Vector
-              </Button>
               <p className="text-xs text-slate-400 break-all">{cvssResult.vector}</p>
             </div>
           </div>
