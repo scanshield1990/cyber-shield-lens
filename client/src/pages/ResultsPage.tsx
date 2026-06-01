@@ -201,7 +201,7 @@ export default function ResultsPage() {
                             <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
                             {technique.confidence && (
                               <span className="text-xs text-slate-400">
-                                {(technique.confidence * 100).toFixed(0)}%
+                                {Math.min((technique.confidence * 100), 100).toFixed(0)}%
                               </span>
                             )}
                           </div>

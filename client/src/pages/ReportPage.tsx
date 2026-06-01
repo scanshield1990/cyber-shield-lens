@@ -215,11 +215,11 @@ export default function ReportPage() {
                            <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded">
                              {technique.tactic}
                            </span>
-                           {technique.confidence && (
-                             <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
-                               {(technique.confidence * 100).toFixed(0)}% confidence
-                             </span>
-                           )}
+                            {technique.confidence && (
+                              <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                                {Math.min((technique.confidence * 100), 100).toFixed(0)}% confidence
+                              </span>
+                            )}
                          </div>
                        </div>
                      </div>
