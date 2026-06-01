@@ -11,11 +11,17 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-16 max-w-2xl relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4">ThreatLens</h1>
+          <p className="text-lg text-slate-300 mb-2">
+            By Scan Shield Security Horizon
+          </p>
           <p className="text-xl text-slate-300 mb-2">
             Simplified vulnerability scoring & incident analysis
           </p>
-          <p className="text-slate-400">
+          <p className="text-slate-400 mb-2">
             Guide cybersecurity professionals through CVSS assessment and MITRE ATT&CK mapping
+          </p>
+          <p className="text-slate-400 italic">
+            S.S.S.H... you're in good hands.
           </p>
         </div>
 
