@@ -38,7 +38,7 @@ function roundUp(value: number): number {
 export function calculateCVSSScore(metrics: CVSSMetrics): CVSSScore {
   const scope = metrics.scope;
 
-  // Base Score calculation
+  // Get metric values
   const av = baseMetricValues.attackVector[metrics.attackVector];
   const ac = baseMetricValues.attackComplexity[metrics.attackComplexity];
   const pr =
@@ -49,15 +49,32 @@ export function calculateCVSSScore(metrics: CVSSMetrics): CVSSScore {
   const i = baseMetricValues.integrity[metrics.integrity];
   const a = baseMetricValues.availability[metrics.availability];
 
-  const impact = 1 - (1 - c) * (1 - i) * (1 - a);
+  // Calculate Impact Sub Score (ISC_Base)
+  const iscBase = 1 - (1 - c) * (1 - i) * (1 - a);
 
+  // Calculate Impact based on scope
+  let impact: number;
+  if (iscBase <= 0) {
+    impact = 0;
+  } else if (scope === "unchanged") {
+    impact = 6.42 * iscBase;
+  } else {
+    // Scope changed
+    impact = 7.52 * (iscBase - 0.029) - 3.25 * Math.pow(iscBase - 0.02, 15);
+  }
+
+  // Calculate Exploitability
+  const exploitability = 8.22 * av * ac * pr * ui;
+
+  // Calculate Base Score
   let baseScore: number;
   if (impact <= 0) {
     baseScore = 0;
   } else if (scope === "unchanged") {
-    baseScore = roundUp(Math.min(impact + av + ac + pr + ui, 10));
+    baseScore = roundUp(Math.min(impact + exploitability, 10));
   } else {
-    baseScore = roundUp(Math.min(1.08 * (impact + av + ac + pr + ui), 10));
+    // Scope changed
+    baseScore = roundUp(Math.min(1.08 * (impact + exploitability), 10));
   }
 
   // Severity mapping
