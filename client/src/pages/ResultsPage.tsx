@@ -5,6 +5,8 @@ import { Badge } from "../components/ui/badge";
 import { calculateCVSSScore, CVSSMetrics } from "../lib/cvss";
 import { suggestMitreTechniques } from "../lib/mitre-attack";
 import { Download, ExternalLink } from "lucide-react";
+import RecommendedActionsSection from "./components/RecommendedActionsSection";
+import ExecutiveSummarySection from "./components/ExecutiveSummarySection";
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -107,6 +109,15 @@ export default function ResultsPage() {
           </div>
         </Card>
 
+        {/* Executive Summary */}
+        {description && mitreAnalysis.tactics.length > 0 && (
+          <ExecutiveSummarySection
+            tactics={mitreAnalysis.tactics}
+            techniques={mitreAnalysis.techniques}
+            confidence={mitreAnalysis.confidence}
+          />
+        )}
+
         {/* MITRE ATT&CK Analysis */}
         {description && (
           <Card className="bg-slate-800 border-slate-700 p-8 mb-6">
@@ -205,6 +216,11 @@ export default function ResultsPage() {
               <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
             )}
           </Card>
+        )}
+
+        {/* Recommended Actions */}
+        {description && mitreAnalysis.tactics.length > 0 && (
+          <RecommendedActionsSection tactics={mitreAnalysis.tactics} />
         )}
 
         <div className="flex gap-4 justify-between flex-wrap">
