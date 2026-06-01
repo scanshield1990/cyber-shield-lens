@@ -7,6 +7,7 @@ import { suggestMitreTechniques } from "../lib/mitre-attack";
 import { Download, ExternalLink } from "lucide-react";
 import RecommendedActionsSection from "./components/RecommendedActionsSection";
 import ExecutiveSummarySection from "./components/ExecutiveSummarySection";
+import FeedbackButton from "./components/FeedbackButton";
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -241,6 +242,7 @@ export default function ResultsPage() {
                 Donate
               </a>
             </Button>
+            <FeedbackButton />
           </div>
           <div className="flex gap-4">
             <Button
