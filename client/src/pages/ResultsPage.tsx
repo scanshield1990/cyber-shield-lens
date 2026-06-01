@@ -172,34 +172,44 @@ Severity: ${cvssResult.severity}`;
                </div>
              )}
 
-             {mitreAnalysis.techniques.length > 0 && (
-               <div>
-                 <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques & Procedures</h3>
-                 <div className="space-y-2">
-                   {mitreAnalysis.techniques.slice(0, 8).map((technique) => (
-                     <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
-                       <div className="flex justify-between items-start">
-                         <div className="flex-1">
-                           <p className="font-semibold text-white">{technique.name}</p>
-                           <p className="text-xs text-slate-400">{technique.id}</p>
-                           {technique.reason && (
-                             <p className="text-xs text-slate-300 mt-1">{technique.reason}</p>
-                           )}
-                         </div>
-                         <div className="flex flex-col items-end gap-1">
-                           <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
-                           {technique.confidence && (
-                             <span className="text-xs text-slate-400">
-                               {(technique.confidence * 100).toFixed(0)}%
-                             </span>
-                           )}
-                         </div>
-                       </div>
-                     </div>
-                   ))}
-                 </div>
-               </div>
-             )}
+              {mitreAnalysis.techniques.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-slate-300 mb-3">Suggested Techniques & Procedures</h3>
+                  <div className="space-y-2">
+                    {mitreAnalysis.techniques.slice(0, 8).map((technique) => {
+                      const mitrePage = `https://attack.mitre.org/techniques/${technique.id.replace(/\./g, '/')}`;
+                      return (
+                        <div key={technique.id} className="bg-slate-700 p-3 rounded-lg">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <a
+                                href={mitrePage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold text-blue-400 hover:text-blue-300 underline block mb-1"
+                              >
+                                {technique.name}
+                              </a>
+                              <p className="text-xs text-slate-400 mb-1">{technique.id}</p>
+                              {technique.reason && (
+                                <p className="text-xs text-slate-300">{technique.reason}</p>
+                              )}
+                            </div>
+                            <div className="flex flex-col items-end gap-1 ml-4">
+                              <Badge className="bg-orange-600 text-xs">{technique.tactic}</Badge>
+                              {technique.confidence && (
+                                <span className="text-xs text-slate-400">
+                                  {(technique.confidence * 100).toFixed(0)}%
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
              {mitreAnalysis.techniques.length === 0 && (
                <p className="text-slate-400">No MITRE ATT&CK techniques matched the description</p>
