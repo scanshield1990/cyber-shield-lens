@@ -289,41 +289,51 @@ export default function QuestionsPage() {
         </Card>
 
         <div className="flex gap-4 justify-between items-center">
-          <Button
-            onClick={handlePrev}
-            disabled={currentQuestion === 0}
-            variant="outline"
-            className="border-slate-600 text-slate-300 disabled:opacity-50"
-          >
-            Previous
-          </Button>
+           <Button
+             onClick={handlePrev}
+             disabled={currentQuestion === 0}
+             variant="outline"
+             className="border-slate-600 text-slate-300 disabled:opacity-50"
+           >
+             Previous
+           </Button>
 
-          <Button
-            onClick={() => setShowSkipDialog(true)}
-            variant="outline"
-            className="border-red-600 text-red-400 hover:bg-red-950"
-          >
-            Skip CVSS Score?
-          </Button>
+           <Button
+             onClick={() => setShowSkipDialog(true)}
+             variant="outline"
+             className="border-red-600 text-red-400 hover:bg-red-950"
+           >
+             Skip CVSS Score?
+           </Button>
 
-          {currentQuestion < questions.length - 1 ? (
-            <Button
-              onClick={handleNext}
-              disabled={!answers[question.id]}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              Next
-            </Button>
-          ) : (
-            <Button
-              onClick={handleContinue}
-              disabled={!allAnswered}
-              className="bg-green-600 hover:bg-green-700"
-            >
-              Continue to Incident Analysis
-            </Button>
-          )}
-        </div>
+           {currentQuestion < questions.length - 1 ? (
+             <Button
+               onClick={handleNext}
+               disabled={!answers[question.id]}
+               className="bg-blue-600 hover:bg-blue-700"
+             >
+               Next
+             </Button>
+           ) : (
+             <Button
+               onClick={handleContinue}
+               disabled={!allAnswered}
+               className="bg-green-600 hover:bg-green-700"
+             >
+               Continue to Incident Analysis
+             </Button>
+           )}
+         </div>
+
+         <div className="mt-6 flex justify-center">
+           <Button
+             onClick={() => navigate("/")}
+             variant="outline"
+             className="border-slate-600 text-slate-300 hover:bg-slate-700"
+           >
+             Cancel
+           </Button>
+         </div>
 
         <Dialog open={showSkipDialog} onOpenChange={setShowSkipDialog}>
           <DialogContent className="bg-slate-800 border-slate-700">

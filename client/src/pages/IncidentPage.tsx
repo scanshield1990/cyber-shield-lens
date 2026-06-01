@@ -52,21 +52,31 @@ export default function IncidentPage() {
         </Card>
 
         <div className="flex gap-4 justify-between">
-          <Button
-            onClick={() => navigate("/questions")}
-            variant="outline"
-            className="border-slate-600 text-slate-300"
-          >
-            Back to Questions
-          </Button>
-          <Button
-            onClick={handleContinue}
-            disabled={!description.trim()}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            Review Results
-          </Button>
-        </div>
+           <Button
+             onClick={() => navigate("/questions")}
+             variant="outline"
+             className="border-slate-600 text-slate-300"
+           >
+             Back to Questions
+           </Button>
+           <Button
+             onClick={handleContinue}
+             disabled={!description.trim()}
+             className="bg-blue-600 hover:bg-blue-700"
+           >
+             Review Results
+           </Button>
+         </div>
+
+         <div className="mt-6 flex justify-center">
+           <Button
+             onClick={() => navigate("/")}
+             variant="outline"
+             className="border-slate-600 text-slate-300 hover:bg-slate-700"
+           >
+             Cancel
+           </Button>
+         </div>
       </div>
     </div>
   );
