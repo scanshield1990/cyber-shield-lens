@@ -1,7 +1,7 @@
 {
-  "name": "ThreatLens",
-  "short_name": "ThreatLens",
-  "description": "ThreatLens: Simplified CVSS scoring and MITRE ATT&CK analysis for cybersecurity professionals",
+  "name": "Cyber Shield Lens",
+  "short_name": "Cyber Shield",
+  "description": "Cyber Shield Lens: Simplified CVSS scoring and MITRE ATT&CK analysis for cybersecurity professionals",
   "start_url": "/",
   "scope": "/",
   "icons": [
