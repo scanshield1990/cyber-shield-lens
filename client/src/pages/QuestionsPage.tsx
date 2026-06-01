@@ -236,8 +236,16 @@ export default function QuestionsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4">
-      <div className="container mx-auto max-w-2xl py-8">
+    <div 
+      className="min-h-screen text-white p-4 flex items-center justify-center"
+      style={{
+        backgroundImage: 'url(/assets/questions-bg.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="container mx-auto max-w-2xl py-8 max-h-screen overflow-y-auto" style={{ marginTop: '-60px' }}>
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Vulnerability Assessment</h1>
           <p className="text-slate-400">
