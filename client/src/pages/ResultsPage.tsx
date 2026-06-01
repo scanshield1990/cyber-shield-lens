@@ -220,25 +220,34 @@ export default function ResultsPage() {
           </Card>
         )}
 
-        <div className="flex gap-4 justify-between">
+        <div className="flex gap-4 justify-between flex-wrap">
           <Button
-            onClick={() => navigate("/incident", { state: { metrics } })}
+            onClick={() => navigate("/")}
             variant="outline"
             className="border-slate-600 text-slate-300"
           >
-            Back
+            Start New Assessment
           </Button>
-          <Button
-            onClick={() =>
-              navigate("/report", {
-                state: { metrics, description, cvssResult, mitreAnalysis },
-              })
-            }
-            className="bg-green-600 hover:bg-green-700"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Generate Report
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate("/incident", { state: { metrics } })}
+              variant="outline"
+              className="border-slate-600 text-slate-300"
+            >
+              Back
+            </Button>
+            <Button
+              onClick={() =>
+                navigate("/report", {
+                  state: { metrics, description, cvssResult, mitreAnalysis },
+                })
+              }
+              className="bg-green-600 hover:bg-green-700"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Generate Report
+            </Button>
+          </div>
         </div>
       </div>
     </div>
