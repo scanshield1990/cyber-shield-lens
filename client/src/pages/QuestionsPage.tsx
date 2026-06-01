@@ -152,15 +152,21 @@ const questions = [
 ];
 
 function HelpTooltip({ question }: { question: (typeof questions)[0] }) {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button className="flex-shrink-0 text-blue-400 hover:text-blue-300 mt-1">
-            <HelpCircle className="w-5 h-5" />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="left" className="max-w-xs bg-slate-700 border-slate-600 text-white p-4 rounded-lg w-80">
+   const [open, setOpen] = useState(false);
+
+   return (
+     <TooltipProvider>
+       <Tooltip open={open} onOpenChange={setOpen}>
+         <TooltipTrigger asChild>
+           <button 
+             className="flex-shrink-0 text-blue-400 hover:text-blue-300 mt-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1"
+             onClick={() => setOpen(!open)}
+             aria-label={`Help for ${question.label}`}
+           >
+             <HelpCircle className="w-5 h-5" />
+           </button>
+         </TooltipTrigger>
+         <TooltipContent side="left" className="max-w-xs bg-slate-700 border-slate-600 text-white p-4 rounded-lg w-80">
           <div className="space-y-3 text-left">
             <p className="font-semibold text-blue-300">{question.label}</p>
             <p className="text-sm text-slate-200">{question.tooltip}</p>
