@@ -63,12 +63,6 @@ export default function HomePage() {
               >
                 Start Assessment
               </Button>
-              <Button
-                onClick={() => window.open("https://cybershieldlens.com/blog", "_blank")}
-                className="bg-slate-700 hover:bg-slate-600 text-white py-6 text-lg font-semibold w-full"
-              >
-                Read Our Blog
-              </Button>
             </div>
 
          </div>
