@@ -6,7 +6,7 @@ export default function FeedbackButton() {
   const [copied, setCopied] = useState(false);
   const [showCopyFallback, setShowCopyFallback] = useState(false);
 
-  const emailAddress = "nickmeade1990@gmail.com";
+  const emailAddress = "support@cybershieldlens.com";
   const subject = "Cyber Shield Lens Feedback";
   const body = encodeURIComponent(
     `Cyber Shield Lens Version: [Enter version]\n\nFeedback:\n[Enter your feedback here]\n\nSteps to Reproduce (if reporting a bug):\n[Enter steps if applicable]\n\nExpected Behavior:\n[Enter expected behavior]\n\nActual Behavior:\n[Enter actual behavior]`
