@@ -79,9 +79,9 @@ export default function HomePage() {
         <p className="font-semibold mb-1">Contact:</p>
         <p>Nicholas Meade</p>
         <p>
-           <a href="mailto:nmeade@cybershieldlens.com" className="text-blue-400 hover:text-blue-300">
-             nmeade@cybershieldlens.com
-           </a>
+           <a href="mailto:support@cybershieldlens.com" className="text-blue-400 hover:text-blue-300">
+              support@cybershieldlens.com
+            </a>
         </p>
         <p>8189664360</p>
       </div>
