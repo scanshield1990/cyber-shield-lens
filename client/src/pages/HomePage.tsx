@@ -56,14 +56,20 @@ export default function HomePage() {
             </ol>
           </Card>
 
-           <div className="mt-8">
-             <Button
-               onClick={() => navigate("/questions")}
-               className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold w-full"
-             >
-               Start Assessment
-             </Button>
-           </div>
+            <div className="mt-8 space-y-4">
+              <Button
+                onClick={() => navigate("/questions")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold w-full"
+              >
+                Start Assessment
+              </Button>
+              <Button
+                onClick={() => window.open("https://cybershieldlens.com/blog", "_blank")}
+                className="bg-slate-700 hover:bg-slate-600 text-white py-6 text-lg font-semibold w-full"
+              >
+                Read Our Blog
+              </Button>
+            </div>
 
          </div>
         </div>
