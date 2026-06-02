@@ -8,14 +8,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/assets/hero-bg.jpg')" }}>
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 to-slate-800/70"></div>
-      <div className="absolute top-6 right-6 z-20">
-        <Button
-          onClick={() => window.open("https://nickmeade1990.wixsite.com/it-guy/blog", "_blank")}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
-        >
-          Blogs
-        </Button>
-      </div>
       <div className="container mx-auto px-4 py-16 max-w-2xl relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4">Cyber Shield Lens</h1>
