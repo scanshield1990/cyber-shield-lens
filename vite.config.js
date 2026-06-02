@@ -61,8 +61,6 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: path.join(process.cwd(), 'dist/public'),
       emptyOutDir: true,
-      sourcemap: false,
-      minify: 'terser',
     },
     clearScreen: false,
     server: {
@@ -80,13 +78,13 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // Only enable source maps in development mode
+    // Enable source maps for development
     css: {
-      devSourcemap: mode === 'development',
+      devSourcemap: true,
     },
-    // Only generate source maps in development
+    // Ensure source maps are properly generated
     esbuild: {
-      sourcemap: mode === 'development',
+      sourcemap: true,
     },
   };
 });

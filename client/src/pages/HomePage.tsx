@@ -64,27 +64,28 @@ export default function HomePage() {
             </ol>
           </Card>
 
-          <div className="mt-8">
-            <Button
-              onClick={() => navigate("/questions")}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold w-full"
-            >
-              Start Assessment
-            </Button>
-          </div>
+           <div className="mt-8">
+             <Button
+               onClick={() => navigate("/questions")}
+               className="bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg font-semibold w-full"
+             >
+               Start Assessment
+             </Button>
+           </div>
+
+         </div>
         </div>
-      </div>
 
       <div className="absolute bottom-0 left-0 p-6 text-slate-400 text-sm">
         <p className="font-semibold mb-1">Contact:</p>
         <p>Nicholas Meade</p>
         <p>
-          <a href="mailto:nmeade@cybershieldlens.com" className="text-blue-400 hover:text-blue-300">
-            nmeade@cybershieldlens.com
+          <a href="mailto:nickmeade1990@gmail.com" className="text-blue-400 hover:text-blue-300">
+            nickmeade1990@gmail.com
           </a>
         </p>
         <p>8189664360</p>
       </div>
     </div>
-  );
-}
+    );
+  }
