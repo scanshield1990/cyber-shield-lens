@@ -78,13 +78,13 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // Enable source maps for development
+    // Only enable source maps in development mode
     css: {
-      devSourcemap: true,
+      devSourcemap: mode === 'development',
     },
-    // Ensure source maps are properly generated
+    // Only generate source maps in development
     esbuild: {
-      sourcemap: true,
+      sourcemap: mode === 'development',
     },
   };
 });
