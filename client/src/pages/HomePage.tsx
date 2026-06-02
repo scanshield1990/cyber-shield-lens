@@ -79,11 +79,11 @@ export default function HomePage() {
       <div className="absolute bottom-0 left-0 p-6 text-slate-400 text-sm">
         <p className="font-semibold mb-1">Contact:</p>
         <p>Nicholas Meade</p>
-        <p>
-          <a href="mailto:nickmeade1990@gmail.com" className="text-blue-400 hover:text-blue-300">
-            nickmeade1990@gmail.com
-          </a>
-        </p>
+         <p>
+           <a href="mailto:nmeade@cybershieldlens.com" className="text-blue-400 hover:text-blue-300">
+             nmeade@cybershieldlens.com
+           </a>
+         </p>
         <p>8189664360</p>
       </div>
     </div>
