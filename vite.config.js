@@ -61,6 +61,8 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: path.join(process.cwd(), 'dist/public'),
       emptyOutDir: true,
+      sourcemap: false,
+      minify: 'terser',
     },
     clearScreen: false,
     server: {
