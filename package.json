@@ -1,11 +1,12 @@
 {
-  "name": "mimo-magic-starter",
+  "name": "cyber-shield-lens",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "build": "vite build && tsc --project tsconfig.server.json",
-    "start": "tsx watch scripts/dev.ts"
+  "build": "vite build && tsc --project tsconfig.server.json",
+  "start": "node dist/server/index.js",
+  "dev": "tsx watch scripts/dev.ts"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "1.1.3",
