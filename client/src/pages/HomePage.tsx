@@ -9,7 +9,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/assets/hero-bg.jpg')" }}>
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 to-slate-800/70"></div>
       <div className="absolute top-6 left-6 z-20">
-        <a href="https://preview--yieldingly-slimy-taxi.mimo.dev" target="_blank" rel="noopener noreferrer">
+        <a href="https://securecode.scanshieldsecurity.org/" target="_blank" rel="noopener noreferrer">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
             Secure Code Warrior Challenge
           </Button>
